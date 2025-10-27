@@ -5,6 +5,7 @@ from app.states.item_detail_state import ItemDetailState
 from app.states.favorites_state import FavoritesState
 from app.states.messaging_state import MessagingState
 from app.states.profile_state import ProfileState
+from app.states.auth_state import AuthState
 from app.components.sidebar import sidebar, mobile_sidebar
 from app.components.header import header
 from app.components.filters import filter_panel
@@ -15,6 +16,7 @@ from app.components.item_detail import item_detail_page
 from app.components.favorites import favorites_page
 from app.components.messages import messages_page
 from app.components.profile import profile_page
+from app.components.auth import welcome_page, login_page, register_page
 
 
 def index() -> rx.Component:
@@ -27,13 +29,13 @@ def index() -> rx.Component:
                 rx.el.div(
                     filter_panel(),
                     marketplace_grid(),
-                    class_name="grid md:grid-cols-[280px_1fr] lg:grid-cols-[320px_1fr] gap-6 items-start",
+                    class_name="grid md:grid-cols-[280px_1fr] lg:grid-cols-[320px_1fr] gap-6 items-start px-4 md:px-6 py-6",
                 ),
-                class_name="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8",
+                class_name="flex-1 overflow-auto",
             ),
-            class_name="flex flex-col",
+            class_name="flex flex-col h-screen bg-gray-50",
         ),
-        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]",
+        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] font-['Lato']",
     )
 
 
@@ -45,11 +47,11 @@ def create_listing() -> rx.Component:
             mobile_sidebar(),
             rx.el.main(
                 create_listing_form(),
-                class_name="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8",
+                class_name="flex-1 overflow-auto p-4 md:p-6 lg:p-8",
             ),
-            class_name="flex flex-col",
+            class_name="flex flex-col h-screen bg-gray-50",
         ),
-        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]",
+        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] font-['Lato']",
     )
 
 
@@ -60,12 +62,11 @@ def my_listings() -> rx.Component:
             header(),
             mobile_sidebar(),
             rx.el.main(
-                my_listings_page(),
-                class_name="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8",
+                my_listings_page(), class_name="flex-1 overflow-auto p-4 md:p-6 lg:p-8"
             ),
-            class_name="flex flex-col",
+            class_name="flex flex-col h-screen bg-gray-50",
         ),
-        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]",
+        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] font-['Lato']",
     )
 
 
@@ -89,12 +90,11 @@ def item_detail() -> rx.Component:
             header(),
             mobile_sidebar(),
             rx.el.main(
-                item_detail_page(),
-                class_name="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8",
+                item_detail_page(), class_name="flex-1 overflow-auto p-4 md:p-6 lg:p-8"
             ),
-            class_name="flex flex-col",
+            class_name="flex flex-col h-screen bg-gray-50",
         ),
-        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]",
+        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] font-['Lato']",
     )
 
 
@@ -105,12 +105,11 @@ def favorites() -> rx.Component:
             header(),
             mobile_sidebar(),
             rx.el.main(
-                favorites_page(),
-                class_name="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8",
+                favorites_page(), class_name="flex-1 overflow-auto p-4 md:p-6 lg:p-8"
             ),
-            class_name="flex flex-col",
+            class_name="flex flex-col h-screen bg-gray-50",
         ),
-        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]",
+        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] font-['Lato']",
     )
 
 
@@ -120,10 +119,10 @@ def messages() -> rx.Component:
         rx.el.div(
             header(),
             mobile_sidebar(),
-            rx.el.main(messages_page(), class_name="flex flex-1 flex-col"),
-            class_name="flex flex-col",
+            rx.el.main(messages_page(), class_name="flex-1 overflow-hidden"),
+            class_name="flex flex-col h-screen",
         ),
-        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]",
+        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] font-['Lato']",
     )
 
 
@@ -135,18 +134,25 @@ def profile() -> rx.Component:
             mobile_sidebar(),
             rx.el.main(
                 profile_page(),
-                class_name="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8",
+                class_name="flex-1 overflow-auto p-4 md:p-6 lg:p-8 bg-gray-50",
             ),
-            class_name="flex flex-col",
+            class_name="flex flex-col h-screen",
         ),
-        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]",
+        class_name="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] font-['Lato']",
     )
 
 
-app.add_page(index)
-app.add_page(create_listing, route="/create")
-app.add_page(my_listings, route="/my-listings")
-app.add_page(item_detail, route="/item/[id]", on_load=ItemDetailState.load_item)
-app.add_page(favorites, route="/favorites")
-app.add_page(messages, route="/messages")
-app.add_page(profile, route="/profile")
+app.add_page(index, on_load=AuthState.require_auth)
+app.add_page(create_listing, route="/create", on_load=AuthState.require_auth)
+app.add_page(my_listings, route="/my-listings", on_load=AuthState.require_auth)
+app.add_page(
+    item_detail,
+    route="/item/[id]",
+    on_load=[ItemDetailState.load_item, AuthState.require_auth],
+)
+app.add_page(favorites, route="/favorites", on_load=AuthState.require_auth)
+app.add_page(messages, route="/messages", on_load=AuthState.require_auth)
+app.add_page(profile, route="/profile", on_load=AuthState.require_auth)
+app.add_page(welcome_page, route="/welcome")
+app.add_page(login_page, route="/login")
+app.add_page(register_page, route="/register")

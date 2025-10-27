@@ -62,13 +62,15 @@ def listing_card(listing: rx.Var[dict]) -> rx.Component:
 def my_listings_page() -> rx.Component:
     return rx.el.div(
         rx.el.div(
-            rx.el.h1("My Listings", class_name="text-3xl font-bold text-gray-800"),
+            rx.el.h1(
+                "My Listings", class_name="text-2xl md:text-3xl font-bold text-gray-800"
+            ),
             rx.el.a(
                 rx.el.button(
                     rx.icon(tag="circle_plus", class_name="mr-2 h-5 w-5"),
                     "Create New Listing",
                     on_click=ListingState.clear_form,
-                    class_name="bg-violet-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-violet-700 flex items-center",
+                    class_name="bg-violet-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-violet-700 flex items-center transition-colors",
                 ),
                 href="/create",
             ),
@@ -78,24 +80,28 @@ def my_listings_page() -> rx.Component:
             ListingState.my_listings.length() > 0,
             rx.el.div(
                 rx.foreach(ListingState.my_listings, listing_card),
-                class_name="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+                class_name="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6",
             ),
             rx.el.div(
                 rx.icon(
                     tag="package-search", class_name="h-16 w-16 mx-auto text-gray-400"
                 ),
+                rx.el.h3(
+                    "No listings yet!",
+                    class_name="mt-6 text-xl font-semibold text-gray-700",
+                ),
                 rx.el.p(
-                    "You haven't created any listings yet.",
-                    class_name="mt-4 text-center text-gray-600",
+                    "Ready to declutter and make some cash?",
+                    class_name="mt-2 text-center text-gray-500",
                 ),
                 rx.el.a(
                     rx.el.button(
                         "Create your first listing",
-                        class_name="mt-4 bg-violet-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-violet-700",
+                        class_name="mt-6 bg-violet-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-violet-700 transition-colors",
                     ),
                     href="/create",
                 ),
-                class_name="text-center col-span-full py-24 bg-gray-50 rounded-lg border-2 border-dashed",
+                class_name="flex flex-col items-center justify-center text-center col-span-full py-24 bg-gray-50/50 rounded-lg border-2 border-dashed",
             ),
         ),
     )

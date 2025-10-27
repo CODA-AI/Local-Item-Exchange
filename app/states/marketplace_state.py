@@ -22,6 +22,7 @@ class MarketplaceState(rx.State):
     """Manages the state for the marketplace page."""
 
     sidebar_open: bool = False
+    filter_drawer_open: bool = False
     items: list[Item] = [
         {
             "id": 1,
@@ -283,6 +284,10 @@ class MarketplaceState(rx.State):
     @rx.event
     def toggle_sidebar(self):
         self.sidebar_open = not self.sidebar_open
+
+    @rx.event
+    def toggle_filter_drawer(self):
+        self.filter_drawer_open = not self.filter_drawer_open
 
     @rx.event
     def handle_search_submit(self, form_data: dict):

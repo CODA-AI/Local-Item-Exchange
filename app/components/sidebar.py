@@ -48,36 +48,46 @@ def sidebar() -> rx.Component:
 
 
 def mobile_sidebar() -> rx.Component:
-    return rx.radix.primitives.dialog.root(
-        rx.radix.primitives.dialog.portal(
-            rx.radix.primitives.dialog.content(
-                rx.el.div(
-                    rx.el.a(
-                        rx.icon(tag="store", class_name="h-6 w-6"),
-                        rx.el.span("LocalSwap"),
-                        href="/",
-                        class_name="flex items-center gap-2 text-lg font-semibold",
-                    ),
-                    rx.radix.primitives.dialog.close(
-                        rx.el.button(
-                            rx.icon(tag="x", class_name="h-4 w-4"),
-                            class_name="ml-auto h-8 w-8",
-                            variant="ghost",
-                        )
-                    ),
-                    class_name="flex items-center gap-4",
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                rx.el.a(
+                    rx.icon(tag="store", class_name="h-6 w-6 text-violet-600"),
+                    rx.el.span("LocalSwap", class_name="font-bold"),
+                    href="/",
+                    class_name="flex items-center gap-2 text-lg font-semibold",
                 ),
-                rx.el.nav(
-                    nav_item("layout-grid", "Marketplace", "/"),
-                    nav_item("package", "My Listings", "/my-listings"),
-                    nav_item("message-square", "Messages", "/messages"),
-                    nav_item("heart", "Favorites", "/favorites"),
-                    nav_item("user-pen", "Profile", "/profile"),
-                    class_name="grid gap-2 text-lg font-medium",
+                rx.el.button(
+                    rx.icon(tag="x", class_name="h-5 w-5"),
+                    on_click=MarketplaceState.toggle_sidebar,
+                    class_name="ml-auto h-8 w-8 p-0",
+                    variant="ghost",
                 ),
-                class_name="flex flex-col gap-6 p-6 bg-white h-full w-64 fixed left-0 top-0 z-50 shadow-lg",
-            )
+                class_name="flex items-center gap-4 p-4 border-b",
+            ),
+            rx.el.nav(
+                nav_item("layout-grid", "Marketplace", "/"),
+                nav_item("package", "My Listings", "/my-listings"),
+                nav_item("message-square", "Messages", "/messages"),
+                nav_item("heart", "Favorites", "/favorites"),
+                nav_item("user-pen", "Profile", "/profile"),
+                on_click=MarketplaceState.toggle_sidebar,
+                class_name="grid gap-2 text-lg font-medium p-4",
+            ),
+            class_name="flex flex-col bg-white h-full w-64 shadow-2xl transition-transform duration-300 ease-in-out",
+            style={
+                "transform": rx.cond(
+                    MarketplaceState.sidebar_open, "translateX(0%)", "translateX(-100%)"
+                )
+            },
         ),
-        open=MarketplaceState.sidebar_open,
-        on_open_change=lambda _: MarketplaceState.toggle_sidebar(),
+        rx.el.div(
+            on_click=MarketplaceState.toggle_sidebar,
+            class_name=rx.cond(
+                MarketplaceState.sidebar_open,
+                "fixed inset-0 bg-black/60 z-30 transition-opacity duration-300 ease-in-out",
+                "hidden",
+            ),
+        ),
+        class_name="fixed inset-0 z-40 md:hidden",
     )
